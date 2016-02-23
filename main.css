@@ -1,0 +1,75 @@
+body {
+  float: left;
+  position: relative;
+  color: #130C0E;
+  padding: 0px;
+  font-family: "Georgia";
+  line-height: 1.5;
+  font-weight: 400;
+  width: 300px;
+  margin: 0px;
+}
+p {
+  padding: 0px;
+  margin-top: 0;
+  font-size: 13px;
+  max-width: 300px;
+
+}
+h1 {
+  font-size: 14px;
+  font-weight: 400;
+
+}
+#slopegraph {
+  min-height: 400px;
+  padding: 0px;
+}
+footer {
+  position: absolute;
+}
+.l-labels, .r-labels {
+  font-size: 10px;
+}
+#nav-alt ul {
+  list-style: none;
+  padding: 0px;
+  margin-top: -90px;
+  font-family: "Sans";
+}
+#nav-alt ul li {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #3264AB;
+  cursor: pointer;
+  font-size: 11px;
+  color: white;
+  margin-right: 1px;
+
+}
+#nav-alt ul li:hover {
+  background: #254b80;
+}
+#reset {
+  list-style: none;
+  padding: 0px;
+  margin-top: -90px;
+  font-family: "Sans";
+}
+#reset {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #3264AB;
+  cursor: pointer;
+  font-size: 11px;
+  color: white;
+  margin-right: 1px;
+
+}
+#reset:hover {
+  background: #254b80;
+}
+text.s-title {
+  fill: #130C0E;
+  letter-spacing: 1px;
+}

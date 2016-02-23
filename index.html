@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>slopegraph</title> 
+  <link rel="stylesheet" href="main.css">
+  <script src="d3.v3.min.js" charset="utf-8"></script>
+</head>
+
+
+<body>
+
+    <section id="slopegraph"></section>
+
+    <footer>
+      <nav id='nav-alt'></nav>
+      <button id="reset">All</button>
+    </footer>
+
+    <!-- namespace -->
+    <script> d3.code4sa = {}; </script>
+    <!-- reusable slopegraph -->
+    <script src="d3_code_slopegraph.js"></script>
+    <script>
+
+  //  render slopegraph chart
+
+    (function() {
+
+    // create chart
+    var slopegraph = d3.code4sa.slopegraph()
+        // .margin({top: 20, bottom: 20, left: 100, right:100})
+        .strokeColour('#130C0E')
+        .keyName('country')
+            .keyValueStart('1970')
+            .keyValueEnd('1979')
+            .h(800)
+            // .format(d3.format('04d'))
+            .on('_hover', function (d, i) {
+                highlightLine(d, i);
+            });
+
+    
+    d3.json('data.json', function(error, data) {
+
+        if (error) throw error;
+
+        // render chart
+        d3.select('#slopegraph')
+            .datum(data)
+            .call(slopegraph);
+
+        // alternative navigation     
+        navAlt(data);
+    });
+
+    // reset button listener
+    d3.select('#reset')
+        .on('click', function () {
+            d3.selectAll('.elm').transition().style('opacity', 1);
+            d3.selectAll('.s-line').style('stroke', '#130C0E');
+        });
+
+    // navigation
+    function navAlt(data) {
+        d3.select('#nav-alt').append('ul')
+            .selectAll('li')
+            .data(data)
+            .enter().append('li')
+            .on('click', function (d, i) {
+                highlightLine(d, i);
+            })
+            .text(function (d) { return d['country']; });
+    }
+
+    // highlight line and fade other lines
+    function highlightLine(d, i) {
+        d3.selectAll('.elm').transition().style('opacity', 0.2);
+        d3.selectAll('.sel-' + i).transition().style('opacity', 1);
+        d3.selectAll('.s-line').style('stroke', '#130C0E');
+        d3.selectAll('.s-line.sel-' + i).style('stroke', '#3264AB');
+    }
+
+  }());
+
+    </script>
+</body>
+</html>
