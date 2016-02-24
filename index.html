@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>slopegraph</title> 
   <link rel="stylesheet" href="main.css">
   <script src="d3.v3.min.js" charset="utf-8"></script>
@@ -78,7 +79,7 @@
         d3.selectAll('.elm').transition().style('opacity', 0.2);
         d3.selectAll('.sel-' + i).transition().style('opacity', 1);
         d3.selectAll('.s-line').style('stroke', '#130C0E');
-        d3.selectAll('.s-line.sel-' + i).style('stroke', '#3264AB');
+        d3.selectAll('.s-line.sel-' + i).style('stroke', '#3264AB'); 
     }
 
   }());
