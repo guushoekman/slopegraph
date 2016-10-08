@@ -8,7 +8,7 @@
     d3.code4sa.slopegraph = function module() {
 
         // input vars for getter setters
-        var w = 300,
+        var w = 420,
             h = 0,
             margin = {top: 40, bottom: 40, left: 100, right: 100},
             strokeColour = 'black',

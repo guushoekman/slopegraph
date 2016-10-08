@@ -1,70 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>slopegraph</title> 
-  <link rel="stylesheet" href="main.css">
-  <script src="d3.v3.min.js" charset="utf-8"></script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slopegraph </title> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/d3.v3.min.js" charset="utf-8"></script>
+  </head>
 
+  <body>
+    <div class="row">
+      <div class="center-block col-content">
+        <p class="good-width">
+          A recreation of <a href="https://www.edwardtufte.com/bboard/images/0003nk-10289.gif">Edward Tufte's slopegraph</a> from <i>The Visual Display of Quantitative Information</i> (1983).
+        </p>
+        <p class="good-width">
+          Current Receipts of Government as a Percentage of Gross Domestic Product, 1970 and 1979
+        </p>
 
-<body>
+        <div id="slopegraph"></div>
 
-    <section id="slopegraph"></section>
+        <div id="menu" class="good-width">
+          <nav id='nav-alt'></nav>
+          <a class="btn btn-default" id="reset">All</a>
+        </div>
 
-    <footer>
-      <nav id='nav-alt'></nav>
-      <button id="reset">All</button>
-    </footer>
+      </div>
+    </div>
 
-    <!-- namespace -->
     <script> d3.code4sa = {}; </script>
-    <!-- reusable slopegraph -->
-    <script src="d3_code_slopegraph.js"></script>
+    <script src="js/d3_code_slopegraph.js"></script>
     <script>
+      (function() {
+        var slopegraph = d3.code4sa.slopegraph()
+          .strokeColour('#130C0E')
+          .keyName('country')
+          .keyValueStart('1970')
+          .keyValueEnd('1979')
+          .h(800)
+          // .format(d3.format('04d'))
+          .on('_hover', function (d, i) {
+              highlightLine(d, i);
+          });
 
-  //  render slopegraph chart
-
-    (function() {
-
-    // create chart
-    var slopegraph = d3.code4sa.slopegraph()
-        // .margin({top: 20, bottom: 20, left: 100, right:100})
-        .strokeColour('#130C0E')
-        .keyName('country')
-            .keyValueStart('1970')
-            .keyValueEnd('1979')
-            .h(800)
-            // .format(d3.format('04d'))
-            .on('_hover', function (d, i) {
-                highlightLine(d, i);
-            });
-
-    
-    d3.json('data.json', function(error, data) {
-
-        if (error) throw error;
-
-        // render chart
-        d3.select('#slopegraph')
+      
+        d3.json('data/data.json', function(error, data) {
+          if (error) throw error;
+            d3.select('#slopegraph')
             .datum(data)
             .call(slopegraph);
-
-        // alternative navigation     
-        navAlt(data);
-    });
-
-    // reset button listener
-    d3.select('#reset')
-        .on('click', function () {
-            d3.selectAll('.elm').transition().style('opacity', 1);
-            d3.selectAll('.s-line').style('stroke', '#130C0E');
+            navAlt(data);
         });
 
-    // navigation
-    function navAlt(data) {
-        d3.select('#nav-alt').append('ul')
+        // reset button listener
+        d3.select('#reset')
+          .on('click', function () {
+              d3.selectAll('.elm').transition().style('opacity', 1);
+              d3.selectAll('.s-line').style('stroke', '#130C0E');
+          });
+
+        // navigation
+        function navAlt(data) {
+          d3.select('#nav-alt').append('ul')
             .selectAll('li')
             .data(data)
             .enter().append('li')
@@ -72,18 +70,19 @@
                 highlightLine(d, i);
             })
             .text(function (d) { return d['country']; });
-    }
+        }
 
-    // highlight line and fade other lines
-    function highlightLine(d, i) {
-        d3.selectAll('.elm').transition().style('opacity', 0.2);
-        d3.selectAll('.sel-' + i).transition().style('opacity', 1);
-        d3.selectAll('.s-line').style('stroke', '#130C0E');
-        d3.selectAll('.s-line.sel-' + i).style('stroke', '#3264AB'); 
-    }
+        // highlight line and fade other lines
+        function highlightLine(d, i) {
+          d3.selectAll('.elm').transition().style('opacity', 0.2);
+          d3.selectAll('.sel-' + i).transition().style('opacity', 1);
+          d3.selectAll('.s-line').style('stroke', '#130C0E');
+          d3.selectAll('.s-line.sel-' + i).style('stroke', '#130C0E'); 
+        }
 
-  }());
+      }());
+    </script>   
 
-    </script>
-</body>
+  </body>
+
 </html>
